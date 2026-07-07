@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 flex justify-center items-center min-h-screen">
+    
+    <form id="registrationForm" onsubmit="handleFormSubmit(event)" class="w-full max-w-md bg-white rounded-2xl shadow-sm p-6 space-y-6 border border-gray-100">
+
+        <div class="bg-gradient-to-b from-slate-900 to-cyan-950 rounded-2xl p-5 text-center text-white space-y-4 shadow-xl">
+            <div class="text-xs text-gray-400 font-medium tracking-wide">SALIM EDUVERSE<BR>স্টুডেন্ট এনরোলমেন্ট ফর্ম</div> 
+        </div>
+
+        <div class="space-y-2">
+            <label class="block text-gray-700 font-semibold text-sm">
+                স্টুডেন্ট নেম <span class="text-red-500">*</span>
+            </label>
+            <div class="relative flex items-center">
+                <input type="text" id="input-name" required placeholder="মায়মুনা __/Muntasir__" class="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all text-gray-700 placeholder-gray-400">
+            </div>
+        </div>
+
+        <div class="space-y-2">
+            <label class="block text-gray-700 font-semibold text-sm">
+                অভিভাবকের ফোন নম্বর <span class="text-red-500">*</span>
+            </label>
+            <div class="relative flex items-center">
+                <span class="absolute left-4 text-gray-400">
+                    <i class="fa-solid fa-phone"></i>
+                </span>
+                <input type="tel" id="input-phone" required placeholder="01_ ___ ___" class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all text-gray-700 placeholder-gray-400">
+            </div>
+        </div>
+
+        <div class="space-y-2">
+            <label class="block text-gray-700 font-semibold text-sm">
+                ইমেইল ঠিকানা <span class="text-gray-400 font-normal text-xs">(ঐচ্ছিক)</span>
+            </label>
+            <div class="relative flex items-center">
+                <span class="absolute left-4 text-gray-400">
+                    <i class="fa-solid fa-envelope"></i>
+                </span>
+                <input type="email" id="input-email" placeholder="student@example.com" class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all text-gray-700 placeholder-gray-400">
+            </div>
+        </div>
+
+        <hr class="border-gray-100">
+
+        <div class="flex flex-col items-center justify-center space-y-2 text-sky-600 font-bold text-lg mb-4">
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-book-open"></i>
+                <span>একাডেমিক বিবরণ</span>
+            </div>
+        </div>
+
+        <div class="space-y-3 text-center">
+            <label class="block text-gray-700 font-semibold text-sm">
+                শ্রেণী নির্বাচন করো <span class="text-red-500">*</span>
+            </label>
+            <div class="grid grid-cols-3 gap-2">
+                <button type="button" id="btn-class8" onclick="selectClass(8)" class="py-3 px-4 rounded-xl border border-sky-500 bg-sky-500 text-white font-semibold text-center text-sm shadow-md transition-all">
+                    Class 8
+                </button>
+                <button type="button" id="btn-class9" onclick="selectClass(9)" class="py-3 px-4 rounded-xl border border-gray-200 bg-white text-gray-600 font-semibold text-center text-sm hover:border-gray-300 transition-all">
+                    SSC
+                </button>
+                <button type="button" id="btn-class10" onclick="selectClass(10)" class="py-3 px-4 rounded-xl border border-gray-200 bg-white text-gray-600 font-semibold text-center text-sm hover:border-gray-300 transition-all">
+                    HSC
+                </button>
+            </div>
+        </div>
+
+        <div class="space-y-3 text-center">
+            <label class="block text-gray-700 font-semibold text-sm mt-4">
+                বিষয় নির্বাচন করো <span class="text-red-500">*</span>
+            </label>
+            <div id="subject-container" class="space-y-3">
+                </div>
+        </div>
+
+        <div class="bg-gradient-to-b from-slate-900 to-cyan-950 rounded-2xl p-5 text-center text-white space-y-4 shadow-xl">
+            <div class="text-xs text-gray-400 font-medium tracking-wide">মোট প্রদেয় টাকার পরিমাণ</div>
+            
+            <div class="flex items-baseline justify-center space-x-1">
+                <span class="text-xl font-bold text-cyan-400">৳</span>
+                <span id="total-price" class="text-3xl font-extrabold tracking-tight">০</span>
+            </div>
+
+            <button type="submit" id="submit-btn" class="w-full bg-rose-700 hover:bg-rose-800 active:scale-[0.98] text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center space-x-2 transition-all mt-2 disabled:bg-gray-600 disabled:cursor-not-allowed">
+                <span id="btn-text">পরবর্তী ধাপ (পেমেন্ট)</span>
+                <i id="btn-icon" class="fa-solid fa-arrow-right text-sm"></i>
+            </button>
+        </div>
+
+    </form>
+
+    <script>
+        // আপনার দেওয়া গুগল অ্যাপ স্ক্রিপ্ট URL
+        const GOOGLE_APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxVJ4d0Ymmn0rAYzh1tfA9sq37eXu63sW32wClJyrOvYj_m2xPAVdfbLKhZA0oFVbvhpw/exec";
+
+        const classData = {
+            8: [
+                { id: 'math8', name: 'সাধারণ গণিত (General Math)', selected: true, price: 320 },
+                { id: 'sci8', name: 'বিজ্ঞান (Science)', selected: true, price: 320 }
+            ],
+            9: [
+                { id: 'bio9', name: 'জীববিজ্ঞান (Biology)', selected: true, price: 400 },
+                { id: 'math9', name: 'উচ্চতর গণিত (Higher Math)', selected: true, price: 400 },
+                { id: 'phy9', name: 'পদার্থবিজ্ঞান (Physics)', selected: false, price: 350 },
+                { id: 'chem9', name: 'রসায়ন (Chemistry)', selected: false, price: 350 },
+                { id: 'ict9', name: 'আইসিটি (ICT)', selected: false, price: 350 }
+            ],
+            10: [
+                { id: 'phy10_1', name: 'পদার্থবিজ্ঞান (Physics) ১ম পত্র', selected: true, price: 400 },
+                { id: 'phy10_2', name: 'পদার্থবিজ্ঞান (Physics) ২য় পত্র', selected: true, price: 400 }
+            ]
+        };
+
+        let currentClass = 8;
+        let globalTotalPrice = 0;
+
+        function toBanglaNumber(num) {
+            const banglaDigits = {'0':'০', '1':'১', '2':'২', '3':'৩', '4':'৪', '5':'৫', '6':'৬', '7':'৭', '8':'৮', '9':'৯'};
+            return num.toString().split('').map(digit => banglaDigits[digit] || digit).join('');
+        }
+
+        function renderSubjects() {
+            const container = document.getElementById('subject-container');
+            container.innerHTML = ''; 
+
+            const subjects = classData[currentClass];
+
+            subjects.forEach((subject, index) => {
+                const cardClass = subject.selected 
+                    ? "flex items-start space-x-4 bg-sky-50/60 border border-sky-500 rounded-2xl p-4 cursor-pointer transition-all select-none mx-auto w-full max-w-sm"
+                    : "flex items-start space-x-4 bg-white border border-gray-200 rounded-2xl p-4 cursor-pointer transition-all select-none hover:border-gray-300 mx-auto w-full max-w-sm";
+
+                const iconClass = subject.selected
+                    ? "flex-shrink-0 w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center mt-0.5 transition-all"
+                    : "flex-shrink-0 w-6 h-6 rounded-full bg-gray-100 text-transparent flex items-center justify-center mt-0.5 border border-gray-300 transition-all";
+
+                const checkIcon = subject.selected ? '<i class="fa-solid fa-check text-xs"></i>' : '';
+
+                const cardHtml = `
+                    <div onclick="toggleSubject(${index})" class="${cardClass}">
+                        <div class="${iconClass}">
+                            ${checkIcon}
+                        </div>
+                        <div class="space-y-1 ml-2 text-left flex-1">
+                            <div class="flex justify-between items-center">
+                                <h4 class="font-semibold text-gray-800 text-base">${subject.name}</h4>
+                                <span class="text-xs font-semibold text-sky-600 bg-sky-50 px-2 py-0.5 rounded-md">৳ ${toBanglaNumber(subject.price)}</span>
+                            </div>
+                            <p class="text-xs text-gray-500 leading-relaxed">তোমার শ্রেণীর স্তরের জন্য এটি নির্বাচন করতে ক্লিক করো।</p>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHtml;
+            });
+
+            updatePrice();
+        }
+
+        function selectClass(classNum) {
+            currentClass = classNum;
+            const buttons = {
+                8: document.getElementById('btn-class8'),
+                9: document.getElementById('btn-class9'),
+                10: document.getElementById('btn-class10')
+            };
+
+            for (let key in buttons) {
+                buttons[key].className = "py-3 px-4 rounded-xl border border-gray-200 bg-white text-gray-600 font-semibold text-center text-sm hover:border-gray-300 transition-all";
+            }
+
+            buttons[classNum].className = "py-3 px-4 rounded-xl border border-sky-500 bg-sky-500 text-white font-semibold text-center text-sm shadow-md transition-all";
+
+            renderSubjects();
+        }
+
+        function toggleSubject(index) {
+            classData[currentClass][index].selected = !classData[currentClass][index].selected;
+            renderSubjects(); 
+        }
+
+        function updatePrice() {
+            const subjects = classData[currentClass];
+            globalTotalPrice = 0;
+
+            subjects.forEach(subject => {
+                if (subject.selected) {
+                    globalTotalPrice += subject.price;
+                }
+            });
+            
+            document.getElementById('total-price').innerText = toBanglaNumber(globalTotalPrice);
+        }
+
+        // গুগল শিটে ডাটা সাবমিট করার ফাংশন
+        function handleFormSubmit(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('input-name').value;
+            const phone = document.getElementById('input-phone').value;
+            const email = document.getElementById('input-email').value;
+            
+            // কি কি সাবজেক্ট সিলেক্ট করা হয়েছে তার লিস্ট তৈরি
+            const selectedSubjects = classData[currentClass]
+                .filter(s => s.selected)
+                .map(s => s.name)
+                .join(', ');
+
+            if (!selectedSubjects) {
+                alert("অনুগ্রহ করে অন্তত একটি বিষয় নির্বাচন করুন!");
+                return;
+            }
+
+            // বাটন লোডিং স্টাইল
+            const submitBtn = document.getElementById('submit-btn');
+            const btnText = document.getElementById('btn-text');
+            submitBtn.disabled = true;
+            btnText.innerText = "লোডিং...";
+
+            // কোন ক্লাসের বাটন সিলেক্ট করা আছে তার টেক্সট ম্যাপ করা
+            let className = "Class 8";
+            if (currentClass === 9) className = "SSC";
+            if (currentClass === 10) className = "HSC";
+
+            // গুগল অ্যাপ স্ক্রিপ্টে পাঠানোর জন্য ডাটা ফরম্যাট
+            const formData = {
+                name: name,
+                phone: phone,
+                email: email || "N/A",
+                class: className,
+                subjects: selectedSubjects,
+                totalPrice: globalTotalPrice
+            };
+
+            // Fetch API দিয়ে সাবমিট করা
+            fetch(GOOGLE_APP_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(() => {
+                alert("অভিনন্দন! আপনার তথ্যটি সফলভাবে গুগল শিটে জমা হয়েছে।");
+                document.getElementById('registrationForm').reset();
+                submitBtn.disabled = false;
+                btnText.innerText = "পরবর্তী ধাপ (পেমেন্ট)";
+                selectClass(8); // ডিফল্ট Class 8 এ ফেরত নিয়ে যাওয়া
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("দুঃখিত, তথ্য পাঠানো সম্ভব হয়নি। আবার চেষ্টা করুন।");
+                submitBtn.disabled = false;
+                btnText.innerText = "পরবর্তী ধাপ (পেমেন্ট)";
+            });
+        }
+
+        renderSubjects();
+    </script>
+</body>
+</html>
