@@ -107,7 +107,7 @@
 
     <script>
         // আপনার দেওয়া গুগল অ্যাপ স্ক্রিপ্ট URL
-        const GOOGLE_APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxVJ4d0Ymmn0rAYzh1tfA9sq37eXu63sW32wClJyrOvYj_m2xPAVdfbLKhZA0oFVbvhpw/exec";
+        const GOOGLE_APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx5ZLZy4KYM-xn-e5opNQZqy6oq9-MDwzb8NSS4trOhnYkuvfKh4KXby2oBOjl9_Mp3KA/exec";
 
         const classData = {
             8: [
@@ -208,70 +208,66 @@
         }
 
         // গুগল শিটে ডাটা সাবমিট করার ফাংশন
-        function handleFormSubmit(event) {
-            event.preventDefault();
+function handleFormSubmit(event) {
+    event.preventDefault();
 
-            const name = document.getElementById('input-name').value;
-            const phone = document.getElementById('input-phone').value;
-            const email = document.getElementById('input-email').value;
-            
-            // কি কি সাবজেক্ট সিলেক্ট করা হয়েছে তার লিস্ট তৈরি
-            const selectedSubjects = classData[currentClass]
-                .filter(s => s.selected)
-                .map(s => s.name)
-                .join(', ');
+    const name = document.getElementById('input-name').value;
+    const phone = document.getElementById('input-phone').value;
+    const email = document.getElementById('input-email').value;
+    
+    const selectedSubjects = classData[currentClass]
+        .filter(s => s.selected)
+        .map(s => s.name)
+        .join(', ');
 
-            if (!selectedSubjects) {
-                alert("অনুগ্রহ করে অন্তত একটি বিষয় নির্বাচন করুন!");
-                return;
-            }
+    if (!selectedSubjects) {
+        alert("অনুগ্রহ করে অন্তত একটি বিষয় নির্বাচন করুন!");
+        return;
+    }
 
-            // বাটন লোডিং স্টাইল
-            const submitBtn = document.getElementById('submit-btn');
-            const btnText = document.getElementById('btn-text');
-            submitBtn.disabled = true;
-            btnText.innerText = "লোডিং...";
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = document.getElementById('btn-text');
+    submitBtn.disabled = true;
+    btnText.innerText = "লোডিং...";
 
-            // কোন ক্লাসের বাটন সিলেক্ট করা আছে তার টেক্সট ম্যাপ করা
-            let className = "Class 8";
-            if (currentClass === 9) className = "SSC";
-            if (currentClass === 10) className = "HSC";
+    let className = "Class 8";
+    if (currentClass === 9) className = "SSC";
+    if (currentClass === 10) className = "HSC";
 
-            // গুগল অ্যাপ স্ক্রিপ্টে পাঠানোর জন্য ডাটা ফরম্যাট
-            const formData = {
-                name: name,
-                phone: phone,
-                email: email || "N/A",
-                class: className,
-                subjects: selectedSubjects,
-                totalPrice: globalTotalPrice
-            };
+    const formData = {
+        name: name,
+        phone: phone,
+        email: email || "N/A",
+        class: className,
+        subjects: selectedSubjects,
+        totalPrice: globalTotalPrice
+    };
 
-            // Fetch API দিয়ে সাবমিট করা
-            fetch(GOOGLE_APP_SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(() => {
-                alert("অভিনন্দন! আপনার তথ্যটি সফলভাবে গুগল শিটে জমা হয়েছে।");
-                document.getElementById('registrationForm').reset();
-                submitBtn.disabled = false;
-                btnText.innerText = "পরবর্তী ধাপ (পেমেন্ট)";
-                selectClass(8); // ডিফল্ট Class 8 এ ফেরত নিয়ে যাওয়া
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert("দুঃখিত, তথ্য পাঠানো সম্ভব হয়নি। আবার চেষ্টা করুন।");
-                submitBtn.disabled = false;
-                btnText.innerText = "পরবর্তী ধাপ (পেমেন্ট)";
-            });
-        }
-
-        renderSubjects();
+    // mode: 'no-cors' sends the data silently and avoids browser blocks
+    fetch(GOOGLE_APP_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors', 
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(() => {
+        // With 'no-cors', this block will reliably trigger once sent
+        alert("অভিনন্দন! আপনার তথ্যটি সফলভাবে জমা হয়েছে।");
+        
+        document.getElementById('registrationForm').reset();
+        submitBtn.disabled = false;
+        btnText.innerText = "পরবর্তী ধাপ (পেমেন্ট)";
+        selectClass(8); // Reset to default class
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert("দুঃখিত, তথ্য পাঠানো সম্ভব হয়নি। আবার চেষ্টা করুন।");
+        submitBtn.disabled = false;
+        btnText.innerText = "পরবর্তী ধাপ (পেমেন্ট)";
+    });
+}        renderSubjects();
     </script>
 </body>
 </html>
