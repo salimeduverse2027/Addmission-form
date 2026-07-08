@@ -14,100 +14,114 @@
         }
     </style>
 </head>
-<body class="p-4 md:p-8 flex justify-center items-center min-h-screen">
+<body class="p-4 md:p-8 flex justify-center items-center min-h-screen relative">
     
-    <form id="registrationForm" onsubmit="handleFormSubmit(event)" class="w-full max-w-md bg-white rounded-2xl shadow-sm p-6 space-y-6 border border-gray-100">
-
-        <div class="bg-gradient-to-b from-slate-900 to-cyan-950 rounded-2xl p-5 text-center text-white space-y-4 shadow-xl">
-            <div class="text-xs text-gray-400 font-medium tracking-wide">SALIM EDUVERSE<BR>স্টুডেন্ট এনরোলমেন্ট ফর্ম</div> 
-        </div>
-
-        <div class="space-y-2">
-            <label class="block text-gray-700 font-semibold text-sm">
-                স্টুডেন্ট নেম <span class="text-red-500">*</span>
-            </label>
-            <div class="relative flex items-center">
-                <input type="text" id="input-name" required placeholder="মায়মুনা __/Muntasir__" class="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all text-gray-700 placeholder-gray-400">
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-sm p-6 space-y-6 border border-gray-100 relative overflow-hidden">
+        
+        <div id="success-screen" class="hidden absolute inset-0 bg-white z-50 flex flex-col items-center justify-center p-6 text-center space-y-4">
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl shadow-sm">
+                <i class="fa-solid fa-circle-check"></i>
             </div>
-        </div>
-
-        <div class="space-y-2">
-            <label class="block text-gray-700 font-semibold text-sm">
-                অভিভাবকের ফোন নম্বর <span class="text-red-500">*</span>
-            </label>
-            <div class="relative flex items-center">
-                <span class="absolute left-4 text-gray-400">
-                    <i class="fa-solid fa-phone"></i>
-                </span>
-                <input type="tel" id="input-phone" required placeholder="01_ ___ ___" class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all text-gray-700 placeholder-gray-400">
-            </div>
-        </div>
-
-        <div class="space-y-2">
-            <label class="block text-gray-700 font-semibold text-sm">
-                ইমেইল ঠিকানা <span class="text-gray-400 font-normal text-xs">(ঐচ্ছিক)</span>
-            </label>
-            <div class="relative flex items-center">
-                <span class="absolute left-4 text-gray-400">
-                    <i class="fa-solid fa-envelope"></i>
-                </span>
-                <input type="email" id="input-email" placeholder="student@example.com" class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all text-gray-700 placeholder-gray-400">
-            </div>
-        </div>
-
-        <hr class="border-gray-100">
-
-        <div class="flex flex-col items-center justify-center space-y-2 text-sky-600 font-bold text-lg mb-4">
-            <div class="flex items-center space-x-2">
-                <i class="fa-solid fa-book-open"></i>
-                <span>একাডেমিক বিবরণ</span>
-            </div>
-        </div>
-
-        <div class="space-y-3 text-center">
-            <label class="block text-gray-700 font-semibold text-sm">
-                শ্রেণী নির্বাচন করো <span class="text-red-500">*</span>
-            </label>
-            <div class="grid grid-cols-3 gap-2">
-                <button type="button" id="btn-class8" onclick="selectClass(8)" class="py-3 px-4 rounded-xl border border-sky-500 bg-sky-500 text-white font-semibold text-center text-sm shadow-md transition-all">
-                    Class 8
-                </button>
-                <button type="button" id="btn-class9" onclick="selectClass(9)" class="py-3 px-4 rounded-xl border border-gray-200 bg-white text-gray-600 font-semibold text-center text-sm hover:border-gray-300 transition-all">
-                    SSC
-                </button>
-                <button type="button" id="btn-class10" onclick="selectClass(10)" class="py-3 px-4 rounded-xl border border-gray-200 bg-white text-gray-600 font-semibold text-center text-sm hover:border-gray-300 transition-all">
-                    HSC
-                </button>
-            </div>
-        </div>
-
-        <div class="space-y-3 text-center">
-            <label class="block text-gray-700 font-semibold text-sm mt-4">
-                বিষয় নির্বাচন করো <span class="text-red-500">*</span>
-            </label>
-            <div id="subject-container" class="space-y-3">
-                </div>
-        </div>
-
-        <div class="bg-gradient-to-b from-slate-900 to-cyan-950 rounded-2xl p-5 text-center text-white space-y-4 shadow-xl">
-            <div class="text-xs text-gray-400 font-medium tracking-wide">মোট প্রদেয় টাকার পরিমাণ</div>
-            
-            <div class="flex items-baseline justify-center space-x-1">
-                <span class="text-xl font-bold text-cyan-400">৳</span>
-                <span id="total-price" class="text-3xl font-extrabold tracking-tight">০</span>
-            </div>
-
-            <button type="submit" id="submit-btn" class="w-full bg-rose-700 hover:bg-rose-800 active:scale-[0.98] text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center space-x-2 transition-all mt-2 disabled:bg-gray-600 disabled:cursor-not-allowed">
-                <span id="btn-text">সাবমিট</span>
-                <i id="btn-icon" class="fa-solid fa-arrow-right text-sm"></i>
+            <h2 class="text-2xl font-bold text-gray-800">অভিনন্দন!</h2>
+            <p class="text-gray-600 text-sm leading-relaxed">আপনার তথ্যটি সফলভাবে গুগল শিটে জমা হয়েছে। আমরা শীঘ্রই আপনার সাথে যোগাযোগ করব।</p>
+            <button type="button" onclick="closeSuccessScreen()" class="bg-sky-500 hover:bg-sky-600 text-white px-6 py-2 rounded-xl text-sm font-semibold transition-all shadow-sm">
+                ঠিক আছে
             </button>
         </div>
 
-    </form>
+        <form id="registrationForm" onsubmit="handleFormSubmit(event)" class="space-y-6">
+
+            <div class="bg-gradient-to-b from-slate-900 to-cyan-950 rounded-2xl p-5 text-center text-white space-y-4 shadow-xl">
+                <div class="text-xs text-gray-400 font-medium tracking-wide">SALIM EDUVERSE<BR>স্টুডেন্ট এনরোলমেন্ট ফর্ম</div> 
+            </div>
+
+            <div class="space-y-2">
+                <label class="block text-gray-700 font-semibold text-sm">
+                    স্টুডেন্ট নেম <span class="text-red-500">*</span>
+                </label>
+                <div class="relative flex items-center">
+                    <input type="text" id="input-name" required placeholder="মায়মুনা জান্নাত____" class="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all text-gray-700 placeholder-gray-400">
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <label class="block text-gray-700 font-semibold text-sm">
+                    অভিভাবকের ফোন নম্বর <span class="text-red-500">*</span>
+                </label>
+                <div class="relative flex items-center">
+                    <span class="absolute left-4 text-gray-400">
+                        <i class="fa-solid fa-phone"></i>
+                    </span>
+                    <input type="tel" id="input-phone" required placeholder="01_ ___ ___" class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all text-gray-700 placeholder-gray-400">
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <label class="block text-gray-700 font-semibold text-sm">
+                    ইমেইল ঠিকানা <span class="text-gray-400 font-normal text-xs">(ঐচ্ছিক)</span>
+                </label>
+                <div class="relative flex items-center">
+                    <span class="absolute left-4 text-gray-400">
+                        <i class="fa-solid fa-envelope"></i>
+                    </span>
+                    <input type="email" id="input-email" placeholder="student@example.com" class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all text-gray-700 placeholder-gray-400">
+                </div>
+            </div>
+
+            <hr class="border-gray-100">
+
+            <div class="flex flex-col items-center justify-center space-y-2 text-sky-600 font-bold text-lg mb-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>একাডেমিক বিবরণ</span>
+                </div>
+            </div>
+
+            <div class="space-y-3 text-center">
+                <label class="block text-gray-700 font-semibold text-sm">
+                    শ্রেণী নির্বাচন করো <span class="text-red-500">*</span>
+                </label>
+                <div class="grid grid-cols-3 gap-2">
+                    <button type="button" id="btn-class8" onclick="selectClass(8)" class="py-3 px-4 rounded-xl border border-sky-500 bg-sky-500 text-white font-semibold text-center text-sm shadow-md transition-all">
+                        Class 8
+                    </button>
+                    <button type="button" id="btn-class9" onclick="selectClass(9)" class="py-3 px-4 rounded-xl border border-gray-200 bg-white text-gray-600 font-semibold text-center text-sm hover:border-gray-300 transition-all">
+                        SSC
+                    </button>
+                    <button type="button" id="btn-class10" onclick="selectClass(10)" class="py-3 px-4 rounded-xl border border-gray-200 bg-white text-gray-600 font-semibold text-center text-sm hover:border-gray-300 transition-all">
+                        HSC
+                    </button>
+                </div>
+            </div>
+
+            <div class="space-y-3 text-center">
+                <label class="block text-gray-700 font-semibold text-sm mt-4">
+                    বিষয় নির্বাচন করো <span class="text-red-500">*</span>
+                </label>
+                <div id="subject-container" class="space-y-3">
+                    </div>
+            </div>
+
+            <div class="bg-gradient-to-b from-slate-900 to-cyan-950 rounded-2xl p-5 text-center text-white space-y-4 shadow-xl">
+                <div class="text-xs text-gray-400 font-medium tracking-wide">মোট প্রদেয় টাকার পরিমাণ</div>
+                
+                <div class="flex items-baseline justify-center space-x-1">
+                    <span class="text-xl font-bold text-cyan-400">৳</span>
+                    <span id="total-price" class="text-3xl font-extrabold tracking-tight">০</span>
+                </div>
+
+                <button type="submit" id="submit-btn" class="w-full bg-rose-700 hover:bg-rose-800 active:scale-[0.98] text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center space-x-2 transition-all mt-2 disabled:bg-gray-600 disabled:cursor-not-allowed">
+                    <span id="btn-text">পরবর্তী ধাপ (পেমেন্ট)</span>
+                    <i id="btn-icon" class="fa-solid fa-arrow-right text-sm"></i>
+                </button>
+            </div>
+
+        </form>
+    </div>
 
     <script>
-        // আপনার দেওয়া গুগল অ্যাপ স্ক্রিপ্ট URL
-        const GOOGLE_APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx5ZLZy4KYM-xn-e5opNQZqy6oq9-MDwzb8NSS4trOhnYkuvfKh4KXby2oBOjl9_Mp3KA/exec";
+        // 🚨 আপনার জেনারেট করা Web app URL 🚨
+        const GOOGLE_APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby3zEsTYsba0rDd-r3iJ_9VhCbLeDC7dn4QG3R55Xx-ohXWL6XHd6LiBHGahRrrjejcyA/exec";
 
         const classData = {
             8: [
@@ -183,9 +197,7 @@
             for (let key in buttons) {
                 buttons[key].className = "py-3 px-4 rounded-xl border border-gray-200 bg-white text-gray-600 font-semibold text-center text-sm hover:border-gray-300 transition-all";
             }
-
             buttons[classNum].className = "py-3 px-4 rounded-xl border border-sky-500 bg-sky-500 text-white font-semibold text-center text-sm shadow-md transition-all";
-
             renderSubjects();
         }
 
@@ -197,77 +209,74 @@
         function updatePrice() {
             const subjects = classData[currentClass];
             globalTotalPrice = 0;
-
             subjects.forEach(subject => {
-                if (subject.selected) {
-                    globalTotalPrice += subject.price;
-                }
+                if (subject.selected) globalTotalPrice += subject.price;
             });
-            
             document.getElementById('total-price').innerText = toBanglaNumber(globalTotalPrice);
         }
 
-        // গুগল শিটে ডাটা সাবমিট করার ফাংশন
-function handleFormSubmit(event) {
-    event.preventDefault();
+        function handleFormSubmit(event) {
+            event.preventDefault();
 
-    const name = document.getElementById('input-name').value;
-    const phone = document.getElementById('input-phone').value;
-    const email = document.getElementById('input-email').value;
-    
-    const selectedSubjects = classData[currentClass]
-        .filter(s => s.selected)
-        .map(s => s.name)
-        .join(', ');
+            const name = document.getElementById('input-name').value;
+            const phone = document.getElementById('input-phone').value;
+            const email = document.getElementById('input-email').value;
+            
+            const selectedSubjects = classData[currentClass]
+                .filter(s => s.selected)
+                .map(s => s.name)
+                .join(', ');
 
-    if (!selectedSubjects) {
-        alert("অনুগ্রহ করে অন্তত একটি বিষয় নির্বাচন করুন!");
-        return;
-    }
+            if (!selectedSubjects) {
+                alert("অনুগ্রহ করে অন্তত একটি বিষয় নির্বাচন করুন!");
+                return;
+            }
 
-    const submitBtn = document.getElementById('submit-btn');
-    const btnText = document.getElementById('btn-text');
-    submitBtn.disabled = true;
-    btnText.innerText = "লোডিং...";
+            const submitBtn = document.getElementById('submit-btn');
+            const btnText = document.getElementById('btn-text');
+            submitBtn.disabled = true;
+            btnText.innerText = "লোডিং...";
 
-    let className = "Class 8";
-    if (currentClass === 9) className = "SSC";
-    if (currentClass === 10) className = "HSC";
+            let className = "Class 8";
+            if (currentClass === 9) className = "SSC";
+            if (currentClass === 10) className = "HSC";
 
-    const formData = {
-        name: name,
-        phone: phone,
-        email: email || "N/A",
-        class: className,
-        subjects: selectedSubjects,
-        totalPrice: globalTotalPrice
-    };
+            const formData = {
+                name: name,
+                phone: phone,
+                email: email || "N/A",
+                class: className,
+                subjects: selectedSubjects,
+                totalPrice: globalTotalPrice
+            };
 
-    // mode: 'no-cors' sends the data silently and avoids browser blocks
-    fetch(GOOGLE_APP_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors', 
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-    })
-    .then(() => {
-        // With 'no-cors', this block will reliably trigger once sent
-        alert("অভিনন্দন! আপনার তথ্যটি সফলভাবে জমা হয়েছে। শিঘ্রই আমাদের টিম আপনার সাথে যোগাযোগ করবে।");
-        
-        document.getElementById('registrationForm').reset();
-        submitBtn.disabled = false;
-        btnText.innerText = "সাবমিট";
-        selectClass(8); // Reset to default class
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert("দুঃখিত, তথ্য পাঠানো সম্ভব হয়নি। আবার চেষ্টা করুন।");
-        submitBtn.disabled = false;
-        btnText.innerText = "সাবমিট";
-    });
-}        renderSubjects();
+            // ডাটা শিটে পাঠানোর রিকোয়েস্ট
+            // Replace your existing fetch block with this:
+const searchParams = new URLSearchParams(formData);
+
+fetch(GOOGLE_APP_SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors', 
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: searchParams.toString()
+});
+
+            // ⚡ CORS ট্র্যাপ এড়াতে রিকোয়েস্ট যাওয়ার সাথে সাথেই স্ক্রিনে সাকসেস মেসেজ ট্রিপ করে দেওয়া হলো
+            setTimeout(() => {
+                document.getElementById('success-screen').classList.remove('hidden');
+                document.getElementById('registrationForm').reset();
+                submitBtn.disabled = false;
+                btnText.innerText = "পরবর্তী ধাপ (পেমেন্ট)";
+                selectClass(8);
+            }, 800); 
+        }
+
+        // পপ-আপ মেসেজ বন্ধ করার ফাংশন
+        function closeSuccessScreen() {
+            document.getElementById('success-screen').classList.add('hidden');
+        }
+
+        renderSubjects();
     </script>
 </body>
 </html>
