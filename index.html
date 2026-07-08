@@ -98,7 +98,7 @@
             </div>
 
             <button type="submit" id="submit-btn" class="w-full bg-rose-700 hover:bg-rose-800 active:scale-[0.98] text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center space-x-2 transition-all mt-2 disabled:bg-gray-600 disabled:cursor-not-allowed">
-                <span id="btn-text">পরবর্তী ধাপ (পেমেন্ট)</span>
+                <span id="btn-text">সাবমিট</span>
                 <i id="btn-icon" class="fa-solid fa-arrow-right text-sm"></i>
             </button>
         </div>
@@ -254,18 +254,18 @@ function handleFormSubmit(event) {
     })
     .then(() => {
         // With 'no-cors', this block will reliably trigger once sent
-        alert("অভিনন্দন! আপনার তথ্যটি সফলভাবে জমা হয়েছে।");
+        alert("অভিনন্দন! আপনার তথ্যটি সফলভাবে জমা হয়েছে। শিঘ্রই আমাদের টিম আপনার সাথে যোগাযোগ করবে।");
         
         document.getElementById('registrationForm').reset();
         submitBtn.disabled = false;
-        btnText.innerText = "পরবর্তী ধাপ (পেমেন্ট)";
+        btnText.innerText = "সাবমিট";
         selectClass(8); // Reset to default class
     })
     .catch(error => {
         console.error('Error:', error);
         alert("দুঃখিত, তথ্য পাঠানো সম্ভব হয়নি। আবার চেষ্টা করুন।");
         submitBtn.disabled = false;
-        btnText.innerText = "পরবর্তী ধাপ (পেমেন্ট)";
+        btnText.innerText = "সাবমিট";
     });
 }        renderSubjects();
     </script>
